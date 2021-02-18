@@ -1,0 +1,10 @@
+{
+  "name": "Server_4",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server_4.js"
+  },
+  "dependencies": {
+    "ws": "^7.4.3"
+  }
+}
