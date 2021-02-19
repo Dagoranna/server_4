@@ -13,7 +13,11 @@ function polydice(dice,diceNumber){
 }
 	
 wss.on('connection', ws => {
-	//clients.add(ws);
+	clients.add(ws);
+	wss.clients.forEach(function each(client) {
+		client.send('new client added. ' + wss.clients.size + ' active connections');
+	});	
+		
 	ws.on('message', message => {
 		//message состоит из запрашиваемой функции, айди игры, имени игрока, типа кубика, кол-ва бросков
 		//например: dice|23452|Icy|20|2
@@ -38,12 +42,12 @@ wss.on('connection', ws => {
 		});			
 	});	
 	
-	ws.on('connection', function(e) {
+	/*ws.on('connection', function(e) {
 		clients.add(ws);
 		wss.clients.forEach(function each(client) {
 			client.send('new client added. ' + wss.clients.size + ' active connections');
 		});		
-	});	
+	});	*/
 	
 	ws.send('server_awakened');
 })
