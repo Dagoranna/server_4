@@ -13,7 +13,6 @@ function polydice(dice,diceNumber){
 	
 wss.on('connection', ws => {
 	ws.on('message', message => {
-		//console.log(`Received message => ${message}`);
 		//message состоит из запрашиваемой функции, айди игры, имени игрока, типа кубика, кол-ва бросков
 		//например: dice|23452|Icy|20|2
 		let answer;
@@ -23,13 +22,16 @@ wss.on('connection', ws => {
 		
 		if (messageArr[0] == 'dice'){
 			answer = message + polydice(messageArr[3],messageArr[4]);
-			//ws.send(answer);
 			wss.clients.forEach(function each(client) {
-			  if (client.readyState === WebSocket.OPEN) {
-				client.send(answer);
-			  }
+				if (client.readyState === WebSocket.OPEN) {
+					client.send(answer);
+				}
 			});			
 		}
 	})
 	ws.send('server_awakened');
 })
+
+	ws.on('close', function() {
+		clients.delete(ws);
+	});	
