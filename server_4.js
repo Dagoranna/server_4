@@ -30,7 +30,10 @@ wss.on('connection', ws => {
 		}
 	});
 	
-	ws.on('close', function() {
+	ws.on('close', function(e) {
+		if(e.code == 1006){
+			const wss = new ReconnectingWebSocket.Server({ port: PORT });
+		}
 		clients.delete(ws);
 	});	
 	
