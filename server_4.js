@@ -5,7 +5,8 @@ const wss = new WebSocket.Server({ port: PORT });
 wss.on('connection', ws => {
   ws.on('message', message => {
     console.log(`Received message => ${message}`);
-	ws.send('I got ' + message);
+	let mydata = message * 2;
+	ws.send('I got ' + mydata);
   })
-  ws.send('ho!')
+  ws.send('server_awakened')
 })
