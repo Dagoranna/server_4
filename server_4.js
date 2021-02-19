@@ -31,7 +31,7 @@ wss.on('connection', ws => {
 	});
 	
 	ws.on('close', function(e) {
-		clients.delete(ws);
+		client.delete(ws);
 	});	
 	
 	ws.send('server_awakened');
