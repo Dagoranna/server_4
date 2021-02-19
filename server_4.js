@@ -10,7 +10,7 @@ wss.on('connection', ws => {
 	
 	let messageArr = message.split('|'); 
 	let randInt = Math.random() * (messageArr[2] - 1) + 1;
-	ws.send(messageArr[1] + ', you got ' + randInt 'on d' + messageArr[2] ); //FOR TEST
+	ws.send(messageArr[1] + ', you got ' + randInt + 'on d' + messageArr[2] ); //FOR TEST
   })
   ws.send('server_awakened')
 })
