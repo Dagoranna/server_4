@@ -33,10 +33,16 @@ wss.on('connection', ws => {
 	
 	ws.on('close', function(e) {
 		clients.delete(ws);
+		wss.clients.forEach(function each(client) {
+			client.send('client disconnected. ' + wss.clients.size + ' active connections');
+		});			
 	});	
 	
 	ws.on('connection', function(e) {
 		clients.add(ws);
+		wss.clients.forEach(function each(client) {
+			client.send('new client added. ' + wss.clients.size + ' active connections');
+		});		
 	});	
 	
 	ws.send('server_awakened');
