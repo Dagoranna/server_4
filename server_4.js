@@ -10,7 +10,7 @@ wss.on('connection', ws => {
 	let answer = message;
 	let messageArr = message.split('|'); 
 	let randInt;
-	for(let i = 1; i < messageArr[3]; i++){
+	for(let i = 1; i <= messageArr[3]; i++){
 		randInt = Math.round(Math.random() * (messageArr[2] - 1) + 1);
 		answer = answer + '|' + randInt;
 	}
