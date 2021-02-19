@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 const PORT = process.env.PORT || 80;
 const wss = new WebSocket.Server({ port: PORT });
+const clients = new Set();
 
 //функция полидайс
 function polydice(dice,diceNumber){
@@ -12,6 +13,7 @@ function polydice(dice,diceNumber){
 }
 	
 wss.on('connection', ws => {
+	clients.add(ws);
 	ws.on('message', message => {
 		//message состоит из запрашиваемой функции, айди игры, имени игрока, типа кубика, кол-ва бросков
 		//например: dice|23452|Icy|20|2
@@ -31,7 +33,7 @@ wss.on('connection', ws => {
 	});
 	
 	ws.on('close', function(e) {
-		client.delete(ws);
+		clients.delete(ws);
 	});	
 	
 	ws.send('server_awakened');
