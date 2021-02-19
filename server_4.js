@@ -28,10 +28,12 @@ wss.on('connection', ws => {
 				}
 			});			
 		}
-	})
-	ws.send('server_awakened');
-})
-
+	});
+	
 	ws.on('close', function() {
 		clients.delete(ws);
 	});	
+	
+	ws.send('server_awakened');
+})
+
