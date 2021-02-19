@@ -31,10 +31,8 @@ wss.on('connection', ws => {
 	});
 	
 	ws.on('close', function(e) {
-		if(e.code == 1006){
-			const wss = new ReconnectingWebSocket.Server({ port: PORT });
-		}
-		clients.delete(ws);
+		const wss = new ReconnectingWebSocket.Server({ port: PORT });
+		//clients.delete(ws);
 	});	
 	
 	ws.send('server_awakened');
