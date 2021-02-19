@@ -8,7 +8,7 @@ function polydice(dice,diceNumber){
 	for(let i = 1; i <= diceNumber; i++){
 		rolls = rolls + '|' + Math.round(Math.random() * (dice - 1) + 1);
 	}	
-	return rolls;
+	return '_' + rolls + '_';
 }
 	
 wss.on('connection', ws => {
