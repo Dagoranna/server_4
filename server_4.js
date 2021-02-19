@@ -4,7 +4,7 @@ const wss = new WebSocket.Server({ port: PORT });
 
 //функция полидайс
 function polydice(dice,diceNumber){
-	let rolls;
+	let rolls='';
 	for(let i = 1; i <= diceNumber; i++){
 		rolls = rolls + '|' + Math.round(Math.random() * (dice - 1) + 1);
 	}	
