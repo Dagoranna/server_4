@@ -31,8 +31,7 @@ wss.on('connection', ws => {
 	});
 	
 	ws.on('close', function(e) {
-		const wss = new ReconnectingWebSocket.Server({ port: PORT });
-		//clients.delete(ws);
+		clients.delete(ws);
 	});	
 	
 	ws.send('server_awakened');
