@@ -25,9 +25,8 @@ wss.on('connection', ws => {
 		if (messageArr[0] == 'dice'){
 			answer = message + polydice(messageArr[3],messageArr[4]);
 			wss.clients.forEach(function each(client) {
-				//if (client.readyState === WebSocket.OPEN) {
-					client.send(answer);
-				//}
+				client.send(answer+ ' ' +wss.clients.length);
+				
 			});			
 		}
 	});
