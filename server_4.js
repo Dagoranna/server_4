@@ -1,8 +1,6 @@
-const ws = require('ws');
+const WebSocket = require('ws');
 const PORT = process.env.PORT || 80;
-const wss = new ws.Server({ port: PORT });
-
-const clients = new Set();
+const wss = new WebSocket.Server({ port: PORT });
 
 //функция полидайс
 function polydice(dice,diceNumber){
@@ -25,7 +23,12 @@ wss.on('connection', ws => {
 		
 		if (messageArr[0] == 'dice'){
 			answer = message + polydice(messageArr[3],messageArr[4]);
-			ws.send(answer);
+			//ws.send(answer);
+			wss.clients.forEach(function each(client) {
+			  if (client.readyState === WebSocket.OPEN) {
+				client.send(answer);
+			  }
+			});			
 		}
 	})
 	ws.send('server_awakened');
