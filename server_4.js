@@ -2,6 +2,7 @@ const WebSocket = require('ws');
 const PORT = process.env.PORT || 80;
 const wss = new WebSocket.Server({ port: PORT });
 const clients = new Set();
+const clientsData = new Map();
 
 //функция полидайс
 function polydice(dice,diceNumber){
@@ -16,7 +17,7 @@ wss.on('connection', ws => {
 	clients.add(ws);
 	wss.clients.forEach(function each(client) {
 		client.send('new client added. ' + wss.clients.size + ' active connections');
-		client.send(ws);
+		//client.send(ws);
 	});	
 		
 	ws.on('message', message => {
@@ -26,12 +27,14 @@ wss.on('connection', ws => {
 		//answer возвращает исходное сообщение, добавляя к нему результаты бросков через '|'
 		//например: dice|23452|Icy|20|2|15|18
 		let messageArr = message.split('|'); 
+		clientsData.set(ws,messageArr[1]);
 		
 		if (messageArr[0] == 'dice'){
 			answer = message + polydice(messageArr[3],messageArr[4]);
 			wss.clients.forEach(function each(client) {
-				client.send(answer);
-				
+				if (clientsData.get(ws) == clientsData.get(client)){
+					client.send(answer);
+				}
 			});			
 		}
 	});
