@@ -16,6 +16,7 @@ wss.on('connection', ws => {
 	clients.add(ws);
 	wss.clients.forEach(function each(client) {
 		client.send('new client added. ' + wss.clients.size + ' active connections');
+		client.send(ws);
 	});	
 		
 	ws.on('message', message => {
