@@ -21,8 +21,6 @@ wss.on('connection', ws => {
 	});	
 		
 	ws.on('message', message => {
-		//message состоит из запрашиваемой функции, айди игры, имени игрока, типа кубика, кол-ва бросков
-		//например: dice|23452|Icy|20|2
 		let answer;
 		//answer возвращает исходное сообщение, добавляя к нему результаты бросков через '|'
 		//например: dice|23452|Icy|20|2|15|18
@@ -30,12 +28,23 @@ wss.on('connection', ws => {
 		clientsData.set(ws,messageArr[1]);
 		
 		if (messageArr[0] == 'dice'){
+			//бросок с полидайса; message состоит из запрашиваемой функции, айди игры, имени игрока, типа кубика, кол-ва бросков
+			//например: dice|23452|Icy|20|2			
 			answer = message + polydice(messageArr[3],messageArr[4]);
 			wss.clients.forEach(function each(client) {
 				if (clientsData.get(ws) == clientsData.get(client)){
 					client.send(answer);
 				}
 			});			
+		} else if (messageArr[0] == 'skill'){
+			//бросок скила; message состоит из запрашиваемой функции, айди игры, имени игрока, айди скила, бонуса скила
+			//например: skill|23452|Icy|decipher-script|18
+			answer = message + polydice(20,1);
+			wss.clients.forEach(function each(client) {
+				if (clientsData.get(ws) == clientsData.get(client)){
+					client.send(answer);
+				}
+			});				
 		}
 	});
 	
