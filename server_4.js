@@ -36,9 +36,19 @@ wss.on('connection', ws => {
 					client.send(answer);
 				}
 			});			
+		} else if (messageArr[0] == 'dicehp'){
+			//бросок с полидайса на наброску хп;
+			//message состоит из запрашиваемой функции, айди игры, имени игрока, типа кубика, кол-ва бросков
+			//например: dicehp|23452|Icy|12|4			
+			answer = message + polydice(messageArr[3],messageArr[4]*2);
+			wss.clients.forEach(function each(client) {
+				if (clientsData.get(ws) == clientsData.get(client)){
+					client.send(answer);
+				}
+			});				
 		} else if (messageArr[0] == 'skill'){
-			//бросок скила; message состоит из запрашиваемой функции, айди игры, имени игрока, айди скила, бонуса скила
-			//например: skill|23452|Icy|decipher-script|18
+			//бросок скила; message состоит из запрашиваемой функции, айди игры, имени игрока, названия скила, бонуса скила
+			//например: skill|23452|Icy|Decipher Script|18
 			answer = message + polydice(20,1);
 			wss.clients.forEach(function each(client) {
 				if (clientsData.get(ws) == clientsData.get(client)){
