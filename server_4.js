@@ -8,7 +8,8 @@ const clientsData = new Map();
 function polydice(dice,diceNumber){
 	let rolls='';
 	for(let i = 1; i <= diceNumber; i++){
-		rolls = rolls + '|' + Math.floor(Math.random() * dice) + 1;
+		let myroll = Math.floor(Math.random() * dice) + 1;
+		rolls = rolls + '|' + myroll;
 	}	
 	return rolls;
 }
